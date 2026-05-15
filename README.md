@@ -40,7 +40,7 @@ python tenns_llm.py --prompt "Hello" --ckpt path/to/checkpoint.ckpt
 | File | Purpose |
 |------|---------|
 | `tenns_llm.py` | Model definition and inference script |
-| `setup.sh` | Convenience wrapper around `uv sync` |
+| `pyproject.toml` | Project dependencies |
 
 ## License
 
