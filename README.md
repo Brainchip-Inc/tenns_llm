@@ -7,7 +7,6 @@ A ~1B parameter autoregressive language model built on [TENNs-Core](https://gith
 - **Architecture**: 24-layer TENNsBlock backbone (gate-mode SSM)
 - **Parameters**: ~1B
 - **Tokenizer**: Mistral-7B (32k vocabulary)
-- **Weights**: [BrainChipInc/tenns-llm-1b](https://huggingface.co/BrainChipInc/tenns-llm-1b) on HuggingFace Hub
 
 ## Setup
 
@@ -36,20 +35,11 @@ python tenns_llm.py --prompt "Once upon a time" --max-tokens 100 --temperature 0
 python tenns_llm.py --prompt "Hello" --ckpt path/to/checkpoint.ckpt
 ```
 
-## Converting a checkpoint
-
-If you have a raw training checkpoint (`.ckpt`), convert it to safetensors with:
-
-```bash
-python convert_to_safetensors.py --ckpt path/to/checkpoint.ckpt --out path/to/output/
-```
-
 ## Files
 
 | File | Purpose |
 |------|---------|
 | `tenns_llm.py` | Model definition and inference script |
-| `convert_to_safetensors.py` | Convert a raw training checkpoint to safetensors |
 | `setup.sh` | Create virtualenv and install dependencies |
 
 ## License
