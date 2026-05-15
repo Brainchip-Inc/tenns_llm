@@ -22,29 +22,8 @@ source venv/bin/activate
 
 ## Usage
 
-### Via HuggingFace (recommended)
-
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-tokenizer = AutoTokenizer.from_pretrained('BrainChipInc/tenns-llm-1b')
-model = AutoModelForCausalLM.from_pretrained(
-    'BrainChipInc/tenns-llm-1b',
-    trust_remote_code=True,
-)
-
-output = model.generate_text(
-    'The history of artificial intelligence',
-    tokenizer,
-    max_new_tokens=100,
-)
-print(output)
-```
-
-### Direct inference script
-
 ```bash
-# Default prompt and checkpoint
+# Default prompt
 python tenns_llm.py
 
 # Custom prompt
@@ -57,16 +36,6 @@ python tenns_llm.py --prompt "Once upon a time" --max-tokens 100 --temperature 0
 python tenns_llm.py --prompt "Hello" --ckpt path/to/checkpoint.ckpt
 ```
 
-## Files
-
-| File | Purpose |
-|------|---------|
-| `tenns_llm.py` | Core model definition and inference script |
-| `modeling_tenns_llm.py` | HuggingFace `PreTrainedModel` wrapper |
-| `configuration_tenns_llm.py` | HuggingFace `PretrainedConfig` subclass |
-| `config.json` | Architecture hyperparameters |
-| `convert_to_safetensors.py` | Convert a raw training checkpoint to safetensors |
-
 ## Converting a checkpoint
 
 If you have a raw training checkpoint (`.ckpt`), convert it to safetensors with:
@@ -74,6 +43,14 @@ If you have a raw training checkpoint (`.ckpt`), convert it to safetensors with:
 ```bash
 python convert_to_safetensors.py --ckpt path/to/checkpoint.ckpt --out path/to/output/
 ```
+
+## Files
+
+| File | Purpose |
+|------|---------|
+| `tenns_llm.py` | Model definition and inference script |
+| `convert_to_safetensors.py` | Convert a raw training checkpoint to safetensors |
+| `setup.sh` | Create virtualenv and install dependencies |
 
 ## License
 
