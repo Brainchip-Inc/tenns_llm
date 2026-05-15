@@ -1,0 +1,12 @@
+[project]
+name = "tenns-llm"
+version = "0.1.0"
+description = "TENNs LLM - ~1B parameter autoregressive language model built on SSM layers"
+requires-python = ">=3.12"
+dependencies = [
+    "tenns-core",
+    "transformers",
+]
+
+[tool.uv.sources]
+tenns-core = { git = "https://github.com/Brainchip-Inc/tenns-core.git" }

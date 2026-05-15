@@ -15,8 +15,8 @@ Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 ```bash
 git clone https://github.com/Brainchip-Inc/tenns_llm.git
 cd tenns_llm
-./setup.sh
-source venv/bin/activate
+uv sync
+source .venv/bin/activate
 ```
 
 ## Usage
@@ -40,7 +40,7 @@ python tenns_llm.py --prompt "Hello" --ckpt path/to/checkpoint.ckpt
 | File | Purpose |
 |------|---------|
 | `tenns_llm.py` | Model definition and inference script |
-| `setup.sh` | Create virtualenv and install dependencies |
+| `setup.sh` | Convenience wrapper around `uv sync` |
 
 ## License
 
