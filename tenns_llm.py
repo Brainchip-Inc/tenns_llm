@@ -17,7 +17,7 @@ Usage:
     python tenns_llm.py --prompt "Hello, world!" --ckpt model.safetensors
     python tenns_llm.py --prompt "What is the meaning of life?" --max-tokens 50
 
-Weights: https://huggingface.co/BrainChipInc/tenns-llm-1b
+Weights: https://huggingface.co/BrainChip-AI/tenns-llm-1b
 """
 
 import torch
@@ -191,7 +191,7 @@ class TENNsLLM(nn.Module):
 def load_weights(model, ckpt_path, strict=False):
     """Load weights from a safetensors file or a training checkpoint.
 
-    Safetensors files (e.g. from https://huggingface.co/BrainChipInc/tenns-llm-1b)
+    Safetensors files (e.g. from https://huggingface.co/BrainChip-AI/tenns-llm-1b)
     contain final merged weights and load directly.
 
     Training checkpoints (.ckpt) contain LoRA adapters (lora_in/lora_out) for
@@ -317,8 +317,8 @@ def generate(model, tokenizer, prompt, max_new_tokens=50, temperature=1.0, top_k
 # CLI
 # ============================================================================
 
-# Download from https://huggingface.co/BrainChipInc/tenns-llm-1b:
-#   huggingface-cli download BrainChipInc/tenns-llm-1b model.safetensors --local-dir .
+# Download from https://huggingface.co/BrainChip-AI/tenns-llm-1b:
+#   huggingface-cli download BrainChip-AI/tenns-llm-1b model.safetensors --local-dir .
 DEFAULT_CHECKPOINT_PATH = "model.safetensors"
 
 
@@ -363,7 +363,7 @@ Examples:
     print("\nLoading Mistral tokenizer...")
     # Mistral-7B tokenizer, bundled with the weights repo (the upstream
     # mistralai/Mistral-7B-v0.1 repo is gated and would require access approval)
-    tokenizer = AutoTokenizer.from_pretrained("BrainChipInc/tenns-llm-1b")
+    tokenizer = AutoTokenizer.from_pretrained("BrainChip-AI/tenns-llm-1b")
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 

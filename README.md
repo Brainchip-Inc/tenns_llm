@@ -11,7 +11,7 @@ A ~1B parameter autoregressive language model built on [TENNs-Core](https://gith
 - **Architecture**: 24-layer TENNsBlock backbone (gate-mode SSM)
 - **Parameters**: ~1B
 - **Tokenizer**: Mistral-7B (32k vocabulary)
-- **Weights**: [BrainChipInc/tenns-llm-1b](https://huggingface.co/BrainChipInc/tenns-llm-1b) on Hugging Face
+- **Weights**: [BrainChip-AI/tenns-llm-1b](https://huggingface.co/BrainChip-AI/tenns-llm-1b) on Hugging Face
 
 ## Setup
 
@@ -27,10 +27,10 @@ source .venv/bin/activate
 ## Model Weights
 
 Pretrained weights are hosted on Hugging Face at
-[BrainChipInc/tenns-llm-1b](https://huggingface.co/BrainChipInc/tenns-llm-1b):
+[BrainChip-AI/tenns-llm-1b](https://huggingface.co/BrainChip-AI/tenns-llm-1b):
 
 ```bash
-huggingface-cli download BrainChipInc/tenns-llm-1b model.safetensors --local-dir .
+huggingface-cli download BrainChip-AI/tenns-llm-1b model.safetensors --local-dir .
 ```
 
 The inference script looks for `model.safetensors` in the current directory by
@@ -40,7 +40,7 @@ default (override with `--ckpt`).
 released under [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/)
 (non-commercial). The Hugging Face repo also provides a `transformers`-compatible
 loading path (`trust_remote_code=True`) — see the
-[model card](https://huggingface.co/BrainChipInc/tenns-llm-1b) for details.
+[model card](https://huggingface.co/BrainChip-AI/tenns-llm-1b) for details.
 
 ## Usage
 
