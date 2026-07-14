@@ -11,6 +11,7 @@ A ~1B parameter autoregressive language model built on [TENNs-Core](https://gith
 - **Architecture**: 24-layer TENNsBlock backbone (gate-mode SSM)
 - **Parameters**: ~1B
 - **Tokenizer**: Mistral-7B (32k vocabulary)
+- **Weights**: [BrainChipInc/tenns-llm-1b](https://huggingface.co/BrainChipInc/tenns-llm-1b) on Hugging Face
 
 ## Setup
 
@@ -22,6 +23,24 @@ cd tenns_llm
 uv sync
 source .venv/bin/activate
 ```
+
+## Model Weights
+
+Pretrained weights are hosted on Hugging Face at
+[BrainChipInc/tenns-llm-1b](https://huggingface.co/BrainChipInc/tenns-llm-1b):
+
+```bash
+huggingface-cli download BrainChipInc/tenns-llm-1b model.safetensors --local-dir .
+```
+
+The inference script looks for `model.safetensors` in the current directory by
+default (override with `--ckpt`).
+
+**Note:** the code in this repository is MIT-licensed, but the model weights are
+released under [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+(non-commercial). The Hugging Face repo also provides a `transformers`-compatible
+loading path (`trust_remote_code=True`) — see the
+[model card](https://huggingface.co/BrainChipInc/tenns-llm-1b) for details.
 
 ## Usage
 
@@ -36,7 +55,7 @@ python tenns_llm.py --prompt "What is the meaning of life?"
 python tenns_llm.py --prompt "Once upon a time" --max-tokens 100 --temperature 0.8 --top-k 50
 
 # Specify checkpoint path
-python tenns_llm.py --prompt "Hello" --ckpt path/to/checkpoint.ckpt
+python tenns_llm.py --prompt "Hello" --ckpt path/to/model.safetensors
 ```
 
 ## Files

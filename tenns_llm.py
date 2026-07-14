@@ -14,8 +14,10 @@ Each TENNsBlock:
   → SSM(A, B, C, log_dt, state) + D*x_conv → gate(res) → out_proj(4096→2048) → residual
 
 Usage:
-    python tenns-llm.py --prompt "Hello, world!" --ckpt /path/to/llm_gate_1b_chat.ckpt
-    python tenns-llm.py --prompt "What is the meaning of life?" --max-tokens 50
+    python tenns_llm.py --prompt "Hello, world!" --ckpt model.safetensors
+    python tenns_llm.py --prompt "What is the meaning of life?" --max-tokens 50
+
+Weights: https://huggingface.co/BrainChipInc/tenns-llm-1b
 """
 
 import torch
@@ -187,12 +189,29 @@ class TENNsLLM(nn.Module):
 
 
 def load_weights(model, ckpt_path, strict=False):
-    """Load weights from checkpoint with LoRA merging.
+    """Load weights from a safetensors file or a training checkpoint.
 
-    The checkpoint contains LoRA adapters (lora_in/lora_out) for in_proj,
-    out_proj, and ssm_layer.C. These are merged into the base weights:
+    Safetensors files (e.g. from https://huggingface.co/BrainChipInc/tenns-llm-1b)
+    contain final merged weights and load directly.
+
+    Training checkpoints (.ckpt) contain LoRA adapters (lora_in/lora_out) for
+    in_proj, out_proj, and ssm_layer.C. These are merged into the base weights:
         weight_merged = weight + lora_out @ lora_in
     """
+    if str(ckpt_path).endswith('.safetensors'):
+        from safetensors.torch import load_file
+        state_dict = load_file(ckpt_path)
+        missing_keys, unexpected_keys = model.load_state_dict(state_dict, strict=strict)
+        if missing_keys:
+            print(f"  Missing keys: {len(missing_keys)}")
+            for k in missing_keys[:10]:
+                print(f"    {k}")
+        if unexpected_keys:
+            print(f"  Unexpected keys: {len(unexpected_keys)}")
+            for k in unexpected_keys[:10]:
+                print(f"    {k}")
+        return model
+
     checkpoint = torch.load(ckpt_path, map_location='cpu', weights_only=False)
     state_dict = checkpoint['state_dict']
 
@@ -298,8 +317,9 @@ def generate(model, tokenizer, prompt, max_new_tokens=50, temperature=1.0, top_k
 # CLI
 # ============================================================================
 
-# DEFAULT_CHECKPOINT_PATH = "/data-standby/shared/weights/llm_gate_1b_chat.ckpt"
-DEFAULT_CHECKPOINT_PATH = "/compute/akayyam/llm_gate_1b_chat.ckpt"
+# Download from https://huggingface.co/BrainChipInc/tenns-llm-1b:
+#   huggingface-cli download BrainChipInc/tenns-llm-1b model.safetensors --local-dir .
+DEFAULT_CHECKPOINT_PATH = "model.safetensors"
 
 
 
@@ -341,7 +361,9 @@ Examples:
 
     # Load tokenizer
     print("\nLoading Mistral tokenizer...")
-    tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
+    # Mistral-7B tokenizer, bundled with the weights repo (the upstream
+    # mistralai/Mistral-7B-v0.1 repo is gated and would require access approval)
+    tokenizer = AutoTokenizer.from_pretrained("BrainChipInc/tenns-llm-1b")
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
